@@ -1,37 +1,131 @@
-## Welcome to GitHub Pages
+# Revisión TensorFlow 1.0 a 2.0
 
-You can use the [editor on GitHub](https://github.com/difo23/tensorflow_notes/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+## Vídeos relacionales
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+- [Dot CSV -  Aprende a programar una RED NEURNAL - Tensorflow - Keras - Sklearn](https://www.youtube.com/watch?v=qTNUbPkR2ao)
 
-```markdown
-Syntax highlighted code block
+  
 
-# Header 1
-## Header 2
-### Header 3
+  - Versatilidad nivel bajo -> Nivel 0 : Python puro y duro.
+  - Nivel 1: Librerías de Python Diferenciación automática - Tensorflow y Pytorch
+  - Nivel 2: Keras - Composición de capas - Módulos de Tensorflow
+  - Facilidad Nivel alto-> Nivel 3: Sklearn - Modelos 
 
-- Bulleted
-- List
+## Fuentes a consultar
 
-1. Numbered
-2. List
+- https://github.com/difo23/awesome-tensorflow#github-tutorials
+- https://developers.google.com/machine-learning/crash-course/ml-intro
+- https://www.tensorflow.org/
+- https://github.com/difo23/tensorflow_notes
 
-**Bold** and _Italic_ and `Code` text
+## Instalación versión 1.x
 
-[Link](url) and ![Image](src)
+## Especificando la versión de TensorFlow
+
+Ejecutando "importar tensorflow" importará la versión por defecto (actualmente 2.x). Puedes usar la 1.x ejecutando una celda con la "versión mágica de tensorflow" **antes de ejecutar "importar tensorflow".
+
+### Si no funciona hacer el pip install
+
+```bash
+!pip install tensoflow==1.13.1
+%tensorflow_version 1.x
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Importando tensorflow
 
-### Jekyll Themes
+```python
+import tensorflow as tf
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/difo23/tensorflow_notes/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+## Constantes y variables
 
-### Support or Contact
+### Definir constantes
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Estos son la diferencia principal entren Tensorflow 1.0 y 2.0.
+
+```python
+# Definir una constante en TensorFlow: 2 filas y 2 columnas
+tensor = tf.constant([[23, 4], [32, 51]])
+```
+
+Un `tensor` con dos dimensiones `<tf.Tensor 'Const:0' shape=(2, 2) dtype=int32>` No presenta el valor del tensor. Para entrar al valor necesitamos  el método `.eval()`. 
+
+```python
+# Si la session no ha sido inicializada, no se pueden acceder a los valores de la constante
+tensor.eval()
+```
+
+```bash
+ValueError: Cannot evaluate tensor using `eval()`: No default session is registered. Use `with sess.as_default()` or pass an explicit session to `eval(session=sess)`
+```
+
+Las variables y constantes en Tensorflow se deben inicial `session` como un tensor. 
+
+### Consultar los valores de la constante
+
+```python
+session = tf.Session()
+session.run(tf.global_variables_initializer())
+tensor_value = session.run(tensor)
+tensor_value
+```
+
+Salida con los valores del tensor constante.
+
+```bash
+array([[23,  4],
+       [32, 51]], dtype=int32)
+```
+
+### Definir variables
+
+```python
+# Definir una variable de TensorFlow 
+variable = tf.Variable([[30, 20], [10, 45]])
+
+variable
+```
+
+Salida obtenida de una variable sin inicial `session`  :
+
+```bash
+<tf.Variable 'Variable:0' shape=(2, 2) dtype=int32_ref>
+```
+
+Sucede lo mismo que con las constantes, necesitas agregarla a una `session` (Ojo que esto me parece canson!)
+
+```python
+# Si la session no ha sido inicializada, no se podrán acceder a los valores de la variable
+variable.eval()
+```
+
+El error mostrado es el siguiente.
+
+```bash
+ValueError: Cannot evaluate tensor using `eval()`: No default session is registered. Use `with sess.as_default()` or pass an explicit session to `eval(session=sess)`
+```
+
+### Consultar los valores de una variable
+
+```python
+# Inicializar una session
+session = tf.Session()
+
+# Inicializar TODAS las variables de la session
+session.run(tf.global_variables_initializer())
+
+# Ejecutar el método eval en el entorno con la sesión iniciada para recuperar los valores del mismo
+variable.eval(session)
+```
+
+Salida de una variable en `session`
+
+```bash
+array([[30, 20],
+       [10, 45]], dtype=int32)
+```
+
+Nota: Tensorflow 2.0 esto se simplifica gracias a DIOS!! :happy:
+
