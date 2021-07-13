@@ -142,7 +142,7 @@ array([[23,  4],
        
 # tensor
 array([[3, 4],
-       [5, 6]], dtype=int32)>
+       [5, 6]], dtype=int32)
        
 # Producto Escalar
 array([[ 87, 106],
@@ -161,8 +161,8 @@ tf_string
 ```
 
 ```python
-tf.strings.length(tf_string)
-tf.strings.unicode_decode(tf_string, "UTF8")
+tf.strings.length(tf_string) ## El 
+tf.strings.unicode_decode(tf_string, "UTF8") ## Decodificar cada letra del string 
 
 tf_string_array = tf.constant(["TensorFlow", "Deep Learning", "AI"])
 
